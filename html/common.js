@@ -94,7 +94,7 @@ function loadMedicalHistory(){
         output += `
                   <div class="cureItem" id=${medicalHistory[i].medicalRecordId} onclick="openNewHistory(id)">
                         <div class="diseaseName" >${medicalHistory[i].generalName}</div>
-                        <div class="diseaseTime">${medicalHistory[i].departmentName}</div>
+                        <div class="diseaseTime">${medicalHistory[i].createDate.substr(0,10)}</div>
                         <div class="hospital">${medicalHistory[i].hospitalName}</div>
                    </div>
 					`;
