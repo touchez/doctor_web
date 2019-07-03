@@ -1,6 +1,6 @@
 var examineNum = 0;
 var add_examineNum;
-var  medicalRecord;
+var medicalRecord;
 var examinationAll;
 var examination_HTML = "";
 var drugAll;
@@ -8,17 +8,19 @@ var add_drugNum =0;
 var drug_HTML = "";
 var examinationTypesIds = new Array();
 var drugs = new Array();
+var medicalRecordId;
 
 //获取当前病例
 function setMedicalRecord(id,isHis) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET","http://47.100.35.6:8080/medicalRecord/web?medicalRecordId="+id,true);
+    medicalRecordId = id;
+    xhr.open("GET","https://touchez.cn:8090/medicalRecord/web?medicalRecordId="+id,true);
     xhr.onload = function(){
         medicalRecord= JSON.parse(this.responseText).data;
         loadCurRecord();
         loadCurExamination();
         loadCurDrug();
-        if(isHis){
+        if(!isHis){
             loadMedicalHistory();
         }
     };
@@ -27,6 +29,7 @@ function setMedicalRecord(id,isHis) {
 //获取当前病例的诊断部分
 function loadCurRecord() {
     var medicalRecordCur= medicalRecord.medicalrecord;
+    medicalRecordId = medicalRecordCur.medicalrecordId;
     var output_symptom = document.getElementById('symptom').innerHTML;
     output_symptom += medicalRecordCur.symptom;
     if(medicalRecordCur.symptom!=null){
@@ -101,7 +104,7 @@ function loadMedicalHistory(){
 //获取全部检查
 function setExaminationAll(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET","http://47.100.35.6:8080/examtype/all",true);
+    xhr.open("GET","https://touchez.cn:8090/examtype/all",true);
     xhr.onload = function(){
         examinationAll = JSON.parse(this.responseText).data;
         for (var i in examinationAll){
@@ -115,7 +118,7 @@ function setExaminationAll(){
 //获取全部药品
 function setDrugAll(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET","http://47.100.35.6:8080/drug/all",true);
+    xhr.open("GET","https://touchez.cn:8090/drug/all",true);
     xhr.onload = function(){
         drugAll = JSON.parse(this.responseText).data;
         for (var i in drugAll){
@@ -187,7 +190,7 @@ function submit_firstCure(){
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST","http://47.100.35.6:8080/medicalRecord/web/post",true);
+    xhr.open("POST","https://touchez.cn:8090/medicalRecord/web/post",true);
     var data;
     xhr.setRequestHeader("Content-Type", "application/json");
     data = JSON.stringify(
@@ -200,7 +203,8 @@ function submit_firstCure(){
                 "medicalrecordContentFirst": medicalrecordContentFirst,
                 "medicalrecordContentFinally":medicalrecordContentFinally,
                 "symptom": symptom,
-                "userId": medicalRecord.medicalrecord.userId
+                "userId": medicalRecord.medicalrecord.userId,
+                "medicalRecordId" : medicalRecordId
             },
             "treatmentDrugOrders": drugs
         }
