@@ -58,7 +58,7 @@ function loadCurExamination() {
             examineNum++;
             add_examineNum = examineNum;
             output += `
-                  <div class="examine_item_div">检查${examineNum}：${responseSimpleExaminationTypes[i].generalString}</div>
+                  <div class="examine_item_div" onclick="open_report()">检查${examineNum}：${responseSimpleExaminationTypes[i].generalString}</div>
 					`;
         }
         document.getElementById('examine').innerHTML = output;
@@ -210,6 +210,7 @@ function submit_firstCure(){
         }
     );
     xhr.send(data);
+    alert("提交成功！");
 }
 
 function Drug(drugCount,drugId,drugName,drugPrice,instructCountPerDay,instructDays,totalPrice) {
@@ -220,4 +221,10 @@ function Drug(drugCount,drugId,drugName,drugPrice,instructCountPerDay,instructDa
     this.instructCountPerDay = instructCountPerDay;
     this.instructDays = instructDays;
     this.totalPrice = totalPrice;
+}
+
+
+//open('examine_report.html')
+function open_report(){
+    window.location.href="examine_report.html";
 }
