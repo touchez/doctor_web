@@ -1,5 +1,5 @@
 var examineNum = 0;
-var add_examineNum;
+var add_examineNum = 0;
 var medicalRecord;
 var examinationAll;
 var examination_HTML = "";
@@ -170,7 +170,6 @@ function submit_firstCure(){
     for(var i=0;i<examineNum_D;i++){
         add_examineNum++;
         examinationTypesIds[add_examineNum-1] = document.getElementsByName("examine"+add_examineNum)[0].value;
-
     }
 
     var drugNum_D =add_drugNum;
